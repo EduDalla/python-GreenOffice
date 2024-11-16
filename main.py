@@ -1,6 +1,6 @@
 from service.serviceUser import forca_opcao, senha_len, email_regex, email_existe, \
     cadastrar_arcondicionado, deletar_arcondicionado, login_usuario, logging, cadastro_usuario, \
-    select_arcondicionados_by_id, verifica_numero, select_arcondicionado
+    select_arcondicionados_by_id, verifica_numero, select_arcondicionado, insert_mensagem
 
 exec(open('./service/serviceUser.py').read())
 print(' ' * 12, 'GreenOffice')
@@ -147,7 +147,16 @@ while True:
         print("-" * 67)
         print(' ' * 30, 'Contato', ' ' * 30)
         print("-" * 67)
-        print(' ' * 30, 'A cada msg vc ganha 1 ponto', ' ' * 30)
+        print(' ' * 30, 'Email - greenoffice@gmail.com', ' ' * 30)
+        print(' ' * 30, 'Número - (99) 99999 - 9999', ' ' * 30)
+        escolha_contato = forca_opcao("Deseja em entrar em contato conosco? (sim/nao) ",
+                                   ['sim', 'nao'])
+        mensagem = input("Digite sua mensagem: ")
+        try:
+            insert_mensagem(dados_usuario[0][0], mensagem)
+            print("Mensagem enviada com sucesso! Entraremos em contato em breve!")
+        except Exception as e:
+            print("Algo deu errado ao enviar a mensagem! Tente mais tarde.")
 
         escolha_site = forca_opcao("Home[Digite 1], Ar condicionado[Digite 2], Contato[Digite 3] - ", ['1', '2', '3'])
 

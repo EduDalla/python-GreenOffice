@@ -21,12 +21,12 @@ regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 
 def cadastro_usuario(nome, email, password):
-    # Inserir dados com timecreated
     timecreated = int(datetime.now().timestamp())
     timemodified = int(datetime.now().timestamp())
 
     cursor.execute('''
-    INSERT INTO usuarios (nome, email, password, timecreated, timemodified)
+    INSERT 
+        INTO usuarios (nome, email, password, timecreated, timemodified)
     VALUES (?, ?, ?, ?, ?)
     ''', (nome, email, password, timecreated, timemodified))
 
@@ -82,6 +82,19 @@ def select_arcondicionados_by_id(id_usuario):
     if resultados:
         return resultados
     return False
+
+
+def insert_mensagem(id_usuario, mensagem):
+    timecreated = int(datetime.now().timestamp())
+    timemodified = int(datetime.now().timestamp())
+
+    cursor.execute('''
+    INSERT
+        INTO Mensagem (id_usuario, mensagem, timecreated, timemodified)
+    VALUES (?, ?, ?, ?)
+    ''', (id_usuario, mensagem, timecreated, timemodified))
+
+    conn.commit()
 
 
 def select_arcondicionado(id_arcondicionado):

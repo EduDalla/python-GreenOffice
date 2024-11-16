@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
 )
 ''')
 
-
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Arcondicionado (
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,6 +25,17 @@ CREATE TABLE IF NOT EXISTS Arcondicionado (
     Horas_consumo REAL NOT NULL,  -- Horas de uso (número real para incluir frações de horas)
     Consumo_energia_kWh REAL NOT NULL,  -- Consumo em kWh (também número real para precisão)
     Saude_do_ambiente INTEGER NOT NULL,
+    Timecreated INTEGER NOT NULL,
+    Timemodified INTEGER NOT NULL,
+    FOREIGN KEY (Id_usuario) REFERENCES usuarios(Id)
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS Mensagem (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Id_usuario INTEGER NOT NULL,
+    Mensagem TEXT NOT NULL, -- Mensagem do usuário
     Timecreated INTEGER NOT NULL,
     Timemodified INTEGER NOT NULL,
     FOREIGN KEY (Id_usuario) REFERENCES usuarios(Id)
