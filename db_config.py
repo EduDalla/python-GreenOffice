@@ -33,12 +33,5 @@ CREATE TABLE IF NOT EXISTS Arcondicionado (
 ''')
 
 conn.commit()
-
-cursor.execute('SELECT * FROM usuarios')
-resultados = cursor.fetchall()
-print(resultados[0][0])
-for linha in resultados:
-    print(linha)
-
 # Fechar conexão
 conn.close()

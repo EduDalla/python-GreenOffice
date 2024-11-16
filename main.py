@@ -111,13 +111,13 @@ while True:
             elif escolha_ar == '3':
                 arcondicionados = select_arcondicionados_by_id(dados_usuario[0][0])
                 if arcondicionados:
-                    escolha_del = forca_opcao("Deseja deletar algum ar condicionado? (sim/nao) ", ['sim', 'nao'])
                     for arcondicionado in arcondicionados:
                         print(f'''Ar condicionado número - {arcondicionado[0]}
                                 Nome - {arcondicionado[2]}
                                 Horas de consumo - {round(arcondicionado[4])} horas
                                 Consumo de energia - {round(arcondicionado[5], 2)}kWh
                                 Saúde do ambiente - {round(arcondicionado[6], 1)}%''')
+                    escolha_del = forca_opcao("Deseja deletar algum ar condicionado? (sim/nao) ", ['sim', 'nao'])
                     while escolha_del == 'sim':
                         num_id = input("Digite o id do ar condicionado: ")
                         id_ar = verifica_numero(num_id)
@@ -140,8 +140,8 @@ while True:
                         "Cadastro[Digite 1], Verificar ar condicionados[Digite 2], Deletar ar condicionados["
                         "Digite 3] Sair[Digite 4] - ", ['1', '2', '3', '4'])
 
-            escolha_site = forca_opcao("Home[Digite 1], Ar condicionado[Digite 2], Contato[Digite 3] - ",
-                                       ['1', '2', '3'])
+        escolha_site = forca_opcao("Home[Digite 1], Ar condicionado[Digite 2], Contato[Digite 3] - ",
+                                   ['1', '2', '3'])
 
     elif escolha_site == '3':
         print("-" * 67)
