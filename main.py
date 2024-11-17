@@ -147,8 +147,8 @@ while True:
         print("-" * 67)
         print(' ' * 30, 'Contato', ' ' * 30)
         print("-" * 67)
-        print(' ' * 30, 'Email - greenoffice@gmail.com', ' ' * 30)
-        print(' ' * 30, 'Número - (99) 99999 - 9999', ' ' * 30)
+        print(' ' * 19, 'Email - greenoffice@gmail.com', ' ' * 30)
+        print(' ' * 20, 'Número - (99) 99999 - 9999', ' ' * 30)
         escolha_contato = forca_opcao("Deseja em entrar em contato conosco? (sim/nao) ",
                                    ['sim', 'nao'])
         mensagem = input("Digite sua mensagem: ")
