@@ -1,0 +1,17 @@
+# Para manipulação de expressões regulares
+re
+
+# Para geração de números aleatórios
+random
+
+# Para manipulação de datas e horas
+datetime
+
+# Para operações de tempo (delays)
+time
+
+# Para logging e mensagens de log
+logging
+
+# Para banco de dados SQLite
+sqlite3
