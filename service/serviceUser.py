@@ -7,12 +7,14 @@ import logging
 import sqlite3
 from datetime import datetime
 
+from db_config import get_connection
+
 # Iniciando conexão com o banco de dados
 conn = sqlite3.connect('greenoffice.db')
 cursor = conn.cursor()
 
 # Configurando o logger
-logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 moedas = 0
@@ -20,19 +22,27 @@ moedas = 0
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 
+# Função para cadastrar o usuário na plataforma
 def cadastro_usuario(nome, email, password):
-    timecreated = int(datetime.now().timestamp())
-    timemodified = int(datetime.now().timestamp())
+    global conn
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        timecreated = int(datetime.now().timestamp())
+        timemodified = int(datetime.now().timestamp())
 
-    cursor.execute('''
-    INSERT 
-        INTO usuarios (nome, email, password, timecreated, timemodified)
-    VALUES (?, ?, ?, ?, ?)
-    ''', (nome, email, password, timecreated, timemodified))
+        cursor.execute('''
+        INSERT INTO usuarios (nome, email, password, timecreated, timemodified)
+        VALUES (?, ?, ?, ?, ?)
+        ''', (nome, email, password, timecreated, timemodified))
 
-    conn.commit()
+        conn.commit()
+
+    except sqlite3.Error as e:
+        logger.error(f"Erro ao cadastrar usuário: {e}")
 
 
+# Função para logar o usuário na plataforma
 def login_usuario(email, senha):
     cursor.execute('''
     SELECT *
@@ -46,6 +56,7 @@ def login_usuario(email, senha):
     return False
 
 
+# Função que verifica se o email é válido
 def email_regex(msg):
     email = input(msg)
     # Definindo o padrão para um e-mail válido
@@ -71,6 +82,7 @@ def email_existe(email):
     return False
 
 
+# Função para selecionar os ar condicionados de acordo com o id do usuário
 def select_arcondicionados_by_id(id_usuario):
     cursor.execute('''
     SELECT *
@@ -84,19 +96,26 @@ def select_arcondicionados_by_id(id_usuario):
     return False
 
 
+# Função para inserir mensagem no banco de acordo com o texto do usuário
 def insert_mensagem(id_usuario, mensagem):
-    timecreated = int(datetime.now().timestamp())
-    timemodified = int(datetime.now().timestamp())
+    try:
+        timecreated = int(datetime.now().timestamp())
+        timemodified = int(datetime.now().timestamp())
 
-    cursor.execute('''
-    INSERT
-        INTO Mensagem (id_usuario, mensagem, timecreated, timemodified)
-    VALUES (?, ?, ?, ?)
-    ''', (id_usuario, mensagem, timecreated, timemodified))
+        cursor.execute('''
+        INSERT
+            INTO Mensagem (id_usuario, mensagem, timecreated, timemodified)
+        VALUES (?, ?, ?, ?)
+        ''', (id_usuario, mensagem, timecreated, timemodified))
 
-    conn.commit()
+        conn.commit()
+        logging.info(f"Mensagem inserida no banco!")
+    except sqlite3.Error as e:
+        logger.error(f"Erro ao inserir mensagem: {e}")
 
 
+
+# Função para selecionar os ar condicionados de acordo com o id do ar condicionado
 def select_arcondicionado(id_arcondicionado):
     cursor.execute('''
     SELECT *
@@ -109,6 +128,8 @@ def select_arcondicionado(id_arcondicionado):
         return resultados
     return False
 
+
+# Função para cadastrar os ar condicionados de acordo com o id do usuário
 def cadastrar_arcondicionado(id_usuario):
     try:
         nome_ar = input("Digite um nome para o ar condicionado: ")
@@ -128,8 +149,11 @@ def cadastrar_arcondicionado(id_usuario):
         ''', (id_usuario, nome_ar, data_consumo, horas_consumo, consumo_energia_kWh, saude_do_ambiente,
               timecreated, timemodified))
         conn.commit()
-    except Exception as e:
-        print(f"Erro ao inserir dados: {e}")
+
+    except sqlite3.Error as e:
+        logger.error(f"Erro ao cadastrar ar condicionado: {e}")
+
+
 
 
 # Função para deletar arcondicionado
@@ -142,12 +166,15 @@ def deletar_arcondicionado(id):
         ''', (id,))
 
         conn.commit()
+        logging.info("DELETE foi executado")
         if cursor.rowcount > 0:
             print(f"{cursor.rowcount} registro(s) deletado(s).")
         else:
             print("Nenhum registro encontrado para deletar.")
-    except Exception as e:
-        print(f"Erro ao deletar dados: {e}")
+
+    except sqlite3.Error as e:
+        logger.error(f"Erro ao deletar dados: {e}")
+
 
 
 # Função que verifica se a senha é igual ou maior que 5
@@ -165,7 +192,7 @@ def verifica_numero(num):
         numero = int(num)
         return numero
     except ValueError:
-        logger.warning(f"Entrada inválida, não é um número: {num}")
+        logger.error(f"Entrada inválida, não é um número: {num}")
         return False
 
 

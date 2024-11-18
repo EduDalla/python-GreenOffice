@@ -3,10 +3,13 @@ from service.serviceUser import forca_opcao, senha_len, email_regex, email_exist
     select_arcondicionados_by_id, verifica_numero, select_arcondicionado, insert_mensagem
 
 exec(open('./service/serviceUser.py').read())
+
 print(' ' * 12, 'GreenOffice')
 print('CONFORTO SAUDÁVEL, ENERGIA SUSTENTÁVEL\n')
+
 escolha_incio = forca_opcao("Digite 1 para se cadastrar ou 2 para fazer login: ", ['1', '2'])
 dados_usuario = 0
+
 while escolha_incio != '3':
     while escolha_incio == '1':
         print("Faça seu cadastro!")
@@ -35,7 +38,6 @@ while escolha_incio != '3':
 
         senha = input("Digite sua senha: ")
         dados_usuario = login_usuario(email, senha)
-        print(dados_usuario)
         if not dados_usuario:
             logging.warning(f"Tentativa de login falhou para o email: {email}")
             escolha_incio = forca_opcao(
@@ -157,6 +159,8 @@ while True:
             print("Mensagem enviada com sucesso! Entraremos em contato em breve!")
         except Exception as e:
             print("Algo deu errado ao enviar a mensagem! Tente mais tarde.")
+            logging.info(f"Erro inesperado ocorreu: {e}")
+
 
         escolha_site = forca_opcao("Home[Digite 1], Ar condicionado[Digite 2], Contato[Digite 3] - ", ['1', '2', '3'])
 
