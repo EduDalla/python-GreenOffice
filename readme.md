@@ -1,3 +1,7 @@
+
+![Logo-green](https://github.com/user-attachments/assets/44f90e5a-afc0-48d1-a41c-82bc35adb1c6)
+
+
 # GreenOffice - Plataforma Inteligente de Conforto e Sustentabilidade
 
 ## Descrição do Projeto
