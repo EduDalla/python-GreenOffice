@@ -27,7 +27,7 @@ A **GreenOfiice** está disposta a ajudar a saúde da sua empresa por um bem mai
 
 ## Pré-requisitos
 Para executar o projeto, certifique-se de ter o seguinte instalado:
-- Python 3.x
+- Python 3.8
 - Módulos necessários listados em `service/serviceUser.py`:
   - **logging**
   - **regex** ou outros pacotes específicos de validação e manipulação.
